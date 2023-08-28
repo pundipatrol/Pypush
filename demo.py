@@ -24,7 +24,7 @@ logging.getLogger("jelly").setLevel(logging.INFO)
 logging.getLogger("nac").setLevel(logging.INFO)
 logging.getLogger("apns").setLevel(logging.INFO)
 logging.getLogger("albert").setLevel(logging.INFO)
-logging.getLogger("ids").setLevel(logging.DEBUG)
+logging.getLogger("ids").setLevel(logging.INFO)
 logging.getLogger("bags").setLevel(logging.INFO)
 logging.getLogger("imessage").setLevel(logging.DEBUG)
 
@@ -70,6 +70,39 @@ user.encryption_identity = ids.identity.IDSIdentity(
     encryption_key=CONFIG.get("encryption", {}).get("rsa_key"),
     signing_key=CONFIG.get("encryption", {}).get("ec_key"),
 )
+
+conn.sock.close() # Will crash threads, whatever
+
+CONFIG["auth"] = {
+    "key": user._auth_keypair.key,
+    "cert": user._auth_keypair.cert,
+    "user_id": user.user_id,
+    "handles": user.handles,
+}
+CONFIG["push"] = {
+    "token": b64encode(user.push_connection.token).decode(),
+    "key": user.push_connection.private_key,
+    "cert": user.push_connection.cert,
+}
+
+with open("config.json", "w") as f:
+    json.dump(CONFIG, f, indent=4)
+
+while True:
+    handles = ids.profile.get_handles(
+        b64encode(user.push_connection.token),
+        user.user_id,
+        user._auth_keypair,
+        user._push_keypair,
+        True
+    )
+    if handles is not None:
+        for handle in handles:
+            if handle['status'] != 5051:
+                logging.error(f"Handle {handle['uri']} has status {handle['status']}")
+            else:
+                logging.debug(f"{handle['uri']}")
+    time.sleep(5 * 60)
 
 if (
     CONFIG.get("id", {}).get("cert") is not None

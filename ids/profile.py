@@ -146,7 +146,7 @@ def get_auth_cert(user_id, token) -> KeyPair:
     )
 
 
-def get_handles(push_token, user_id: str, auth_key: KeyPair, push_key: KeyPair):
+def get_handles(push_token, user_id: str, auth_key: KeyPair, push_key: KeyPair, raw = False):
     BAG_KEY = "id-get-handles"
 
     headers = {
@@ -169,4 +169,7 @@ def get_handles(push_token, user_id: str, auth_key: KeyPair, push_key: KeyPair):
         raise Exception("No handles in response: " + str(r))
 
     logger.debug(f"User {user_id} has handles {r['handles']}")
-    return [handle["uri"] for handle in r["handles"]]
+    if raw:
+        return r["handles"]
+    else:
+        return [handle["uri"] for handle in r["handles"]]
