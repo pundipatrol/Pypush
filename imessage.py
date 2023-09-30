@@ -446,6 +446,9 @@ class iMessageUser:
     """Mapping of handle : [push tokens]"""
 
     def _cache_keys(self, participants: list[str]):
+        # Remove current user from participants
+        #participants = [p for p in participants if p != self.user.current_handle]
+
         # Clear the cache if the handle has changed
         if self.KEY_CACHE_HANDLE != self.user.current_handle:
             self.KEY_CACHE_HANDLE = self.user.current_handle
@@ -453,8 +456,8 @@ class iMessageUser:
             self.USER_CACHE = {}
         
         # Check to see if we have cached the keys for all of the participants
-        if all([p in self.USER_CACHE for p in participants]):
-            return
+        #if all([p in self.USER_CACHE for p in participants]):
+        #    return
 
         # Look up the public keys for the participants, and cache a token : public key mapping
         lookup = self.user.lookup(participants)
@@ -462,6 +465,10 @@ class iMessageUser:
         for key, participant in lookup.items():
             if not key in self.USER_CACHE:
                 self.USER_CACHE[key] = []
+
+            #if len(participant["identities"]) == 0:
+            #    logger.warning("NO IDENTITIES!")
+            logger.warning(f"Participant {key} has {len(participant['identities'])} identities")
 
             for identity in participant["identities"]:
                 if not "client-data" in identity:
@@ -485,7 +492,7 @@ class iMessageUser:
     def send(self, message: iMessage):
         # Set the sender, if it isn't already
         if message.sender is None:
-            message.sender = self.user.handles[0]  # TODO : Which handle to use?
+           message.sender = self.user.handles[0]  # TODO : Which handle to use?
 
         message.sanity_check() # Sanity check MUST be called before caching keys, so that the sender is added to the list of participants
         self._cache_keys(message.participants)

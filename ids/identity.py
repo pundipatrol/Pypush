@@ -99,9 +99,31 @@ def register(
         "language": "en-US",
         "os-version": "macOS,13.2.1,22D68",
         "software-version": "22D68",
+        "device-name": "James’s Laptop",
+        "hardware-version": "MacBookPro18,3",
+        "language": "en-US",
+        "os-version": "macOS,13.4.1,22F82",
+        "private-device-data": {
+            "ap": "0",
+            "d": "717785001.181324",
+            "dt": "1",
+            "gt": "0",
+            "h": "1",
+            "ktf": "0",
+            "ktv": "70",
+            "m": "0",
+            "p": "0",
+            "pb": "22F82",
+            "pn": "macOS",
+            "pv": "13.4.1",
+            "s": "0",
+            "t": "0",
+            "u": "E451BD65-51B0-44F3-805A-A92BDD8A5000",
+            "v": "1",
+        },
         "services": [
             {
-                "capabilities": [{"flags": 17, "name": "Messenger", "version": 1}],
+                "capabilities": [{"flags": 1, "name": "Messenger", "version": 1}],
                 "service": "com.apple.madrid",
                 "users": [
                     {
@@ -136,15 +158,31 @@ def register(
                 ],
             }
         ],
-        "validation-data": b64decode(validation_data),
+        "software-version": "22F82",
+        #"validation-data": b64decode(validation_data),
+        "validation-data": b64decode("""AiZPQSUbQiOdgm6ZYJlYH5fmLGsDdgR/D1qiKCvZ37vvAAAB4AcAAAABAAABgDaBPLlH
+      8CwoQ1FYxR68/n1h93n8Z6FqL0K2a/TueX89Zebqo/2yGI4uGZ4nnk9dyuN7nxBJlBrg
+      7z7OnWywsnWIS1QLzJE1ktOGG7PlBJ+NioIkEfvydNomlkBVPGxQIi/2LT7shBPncP9T
+      At6M3fxxQRQhpAeC0J9t6X7Ez5bWbaPwXirRfcVepPx2WZaSOJ8kYRxCPBMFYVlmW9n4
+      uK3pn/vefAqbCyOmub7Qw/Jnna4WHcRxqW2/nOPwHa2l1ZeIRH5mQ58PqxMOf0XtIuld
+      i8hMlPaEzlkWt1qggUrF5ZO8uj+EgOjR0weDsJm0Ckfcw4tSDIQ7FXQlzseVN4qTcDjs
+      3NxklUItmIBqDPt+8GvNIY2hd1BjmFgW5IE8zHNoMOGbm7p7Wf7Flp0W6Rm+9lCmjBSH
+      Oh+F8Bf97gtqC+vDjT7wKYC4k/c0S4b0mycCW+P/JQhLvIDRr3+UN25dTUMElirxZd3Q
+      Ek82GQWX4y3ld6pDH+omfUlFew4yxwAAAAAAAABPAVDGn6dOi1pJ7VJiAGFhTLzAJZlz
+      AAAANgIEktrH8a9tLuzWOyQ9AbVMhWUYlhTFSvLPhnbjdWJEOrmxXbI94Bc4WwH0+3ow
+      wl/bf/hCXg==""")
     }
 
     body = plistlib.dumps(body)
+    import gsa
 
     headers = {
         "x-protocol-version": PROTOCOL_VERSION,
         "x-auth-user-id-0": user_id,
+        "user-agent": "com.apple.invitation-registration [macOS,13.2.1,22D68,MacBookPro18,3]",
     }
+    a = gsa.Anisette().generate_headers()
+    headers.update(a)
     add_auth_signature(headers, body, "id-register", auth_key, push_key, push_token, 0)
 
     r = requests.post(

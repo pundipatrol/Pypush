@@ -73,9 +73,11 @@ user.encryption_identity = ids.identity.IDSIdentity(
     signing_key=CONFIG.get("encryption", {}).get("ec_key"),
 )
 
+REGISTER = True
 if (
     CONFIG.get("id", {}).get("cert") is not None
     and user.encryption_identity is not None
+    and not REGISTER
 ):
     id_keypair = ids._helpers.KeyPair(CONFIG["id"]["key"], CONFIG["id"]["cert"])
     user.restore_identity(id_keypair)
@@ -201,6 +203,7 @@ while True:
             else:
                 print(f'Filtering to {[fixup_handle(h) for h in msg[1:]]}')
                 current_participants = [fixup_handle(h) for h in msg[1:]]
+                im._cache_keys(current_participants)
         elif msg == 'handle' or msg.startswith('handle '):
             msg = msg.split(' ')
             if len(msg) < 2 or msg[1] == '':
