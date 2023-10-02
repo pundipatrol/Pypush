@@ -160,17 +160,17 @@ def register(
         ],
         "software-version": "22F82",
         #"validation-data": b64decode(validation_data),
-        "validation-data": b64decode("""AiZPQSUbQiOdgm6ZYJlYH5fmLGsDdgR/D1qiKCvZ37vvAAAB4AcAAAABAAABgDaBPLlH
+        "validation-data": b64decode("""Ak7s9tUr6lEZnWCmeKsskKx9uobVrR+nVf1cGB3AgH6zAAAB4AcAAAABAAABgDaBPLlH
       8CwoQ1FYxR68/n1h93n8Z6FqL0K2a/TueX89Zebqo/2yGI4uGZ4nnk9dyuN7nxBJlBrg
       7z7OnWywsnWIS1QLzJE1ktOGG7PlBJ+NioIkEfvydNomlkBVPGxQIi/2LT7shBPncP9T
       At6M3fxxQRQhpAeC0J9t6X7Ez5bWbaPwXirRfcVepPx2WZaSOJ8kYRxCPBMFYVlmW9n4
       uK3pn/vefAqbCyOmub7Qw/Jnna4WHcRxqW2/nOPwHa2l1ZeIRH5mQ58PqxMOf0XtIuld
-      i8hMlPaEzlkWt1qggUrF5ZO8uj+EgOjR0weDsJm0Ckfcw4tSDIQ7FXQlzseVN4qTcDjs
-      3NxklUItmIBqDPt+8GvNIY2hd1BjmFgW5IE8zHNoMOGbm7p7Wf7Flp0W6Rm+9lCmjBSH
-      Oh+F8Bf97gtqC+vDjT7wKYC4k/c0S4b0mycCW+P/JQhLvIDRr3+UN25dTUMElirxZd3Q
-      Ek82GQWX4y3ld6pDH+omfUlFew4yxwAAAAAAAABPAVDGn6dOi1pJ7VJiAGFhTLzAJZlz
-      AAAANgIEktrH8a9tLuzWOyQ9AbVMhWUYlhTFSvLPhnbjdWJEOrmxXbI94Bc4WwH0+3ow
-      wl/bf/hCXg==""")
+      i8hMlPaEzlkWt1qggUrF5ZO8uj+EgOjR0weDsJm0Ckfcw4tSDIQ7FXQlzseVN4pBmabD
+      7sTxuINeB2B3fwQryTEV4u8DXR1k0OibWB1IBi5qIMOdItJpBBLU6RC5xGwo+kkI5UE3
+      jmVmNQ99M9z161Iri5ElOZzXneyGgwToYuaY/PA5Pukbv3B5GLKjqmfg03TwesQdI/+e
+      8P0ki92QGV/ip3c3YWUp7zKSwjK/awAAAAAAAABPAaDeycCate3r72JMFXdb7/0Htgvj
+      AAAANgkAy7moYwSJdJXARpyZctM8dWUbG2XJtOS+ecjZ/EWSJfXaiFNI9sAJQJYaHH39
+      awIcQWmNSw==""")
     }
 
     body = plistlib.dumps(body)
