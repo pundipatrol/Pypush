@@ -453,8 +453,8 @@ class iMessageUser:
             self.USER_CACHE = {}
         
         # Check to see if we have cached the keys for all of the participants
-        if all([p in self.USER_CACHE for p in participants]):
-            return
+        #if all([p in self.USER_CACHE for p in participants]):
+        #    return
 
         # Look up the public keys for the participants, and cache a token : public key mapping
         lookup = self.user.lookup(participants)
@@ -462,6 +462,8 @@ class iMessageUser:
         for key, participant in lookup.items():
             if not key in self.USER_CACHE:
                 self.USER_CACHE[key] = []
+
+            logger.warning(f"Participant {key} has {len(participant['identities'])} identities")
 
             for identity in participant["identities"]:
                 if not "client-data" in identity:

@@ -201,6 +201,7 @@ while True:
             else:
                 print(f'Filtering to {[fixup_handle(h) for h in msg[1:]]}')
                 current_participants = [fixup_handle(h) for h in msg[1:]]
+                im._cache_keys(current_participants)
         elif msg == 'handle' or msg.startswith('handle '):
             msg = msg.split(' ')
             if len(msg) < 2 or msg[1] == '':
